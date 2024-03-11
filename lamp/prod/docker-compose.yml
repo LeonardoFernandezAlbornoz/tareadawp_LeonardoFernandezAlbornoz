@@ -1,0 +1,13 @@
+version: '3'
+services:
+  web:
+    build: apache
+    ports:
+      - 80:80
+      - 443:443
+    env_file:
+      - .env
+    volumes:
+      - ./app:/app
+      - ./apache/certificados:/certificados
+      - ./apache/a22leonardofa.giize.com.conf:/etc/apache2/sites-enabled/a22leonardofa.giize.com.conf

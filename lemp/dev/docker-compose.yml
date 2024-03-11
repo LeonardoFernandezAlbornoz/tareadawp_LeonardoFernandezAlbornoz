@@ -1,0 +1,28 @@
+version: '3'
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./app:/app
+      - ./nginx/a22leonardofa.conf.template:/etc/nginx/templates/a22leonardofa.giize.conf.template
+      - ./nginx/certificados:/certificados
+    env_file:
+      - .env
+  basedatos:
+    image: mysql:latest
+    volumes:
+      - ./bd/backup:/docker-entrypoint-initdb.d
+      - datos:/var/lib/mysql
+      - ./bd/backup:/backup
+    env_file:
+      - .env_bd
+  meuphp:
+    build: php
+    volumes:
+      - ./app:/app
+      - ./php/www.conf:/etc/php/8.2/fpm/pool.d/www.conf
+volumes:
+  datos:

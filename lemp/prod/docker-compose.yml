@@ -1,0 +1,21 @@
+version: '3'
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./app:/app
+      - ./nginx/daw2324.casacam.net.conf.template:/etc/nginx/templates/daw2324.casacam.net.conf.template
+      - ./nginx/certificados/:/certificados
+    env_file:
+      - .env
+  meuphp:
+    build: php
+    volumes:
+      - ./app:/app
+      - ./php/www.conf:/etc/php/8.2/fpm/pool.d/www.conf
+      - ./php/php.ini:/etc/php/8.2/fpm/php.ini
+volumes:
+  datos:
